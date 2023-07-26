@@ -37,11 +37,8 @@ await fetch("https://accounts.spotify.com/api/token", {
 })
 .then(resp => resp.json())
 .then(data => {
-   // let query = querystring.stringify(data);
-   // res.redirect(`http:localhost:3000/${query}`)
-    let query = querystring.stringify(data);
-    const frontendURL = "http://localhost:3000"; // Replace this with your actual frontend URL
-    res.redirect(`${frontendURL}/?${query}`);
+   let query = querystring.stringify(data);
+   res.redirect(`http://localhost:3000/${query}`)
 });
 })
 
