@@ -38,7 +38,19 @@ await fetch("https://accounts.spotify.com/api/token", {
 .then(resp => resp.json())
 .then(data => {
    let query = querystring.stringify(data);
-   res.redirect(`http://localhost:3000/${query}`)
+   //res.redirect(`http://localhost:3000/${query}`)
+   res.redirect(`http://localhost:3000/home?${query}`)
+
+/*TODO**************: change res.redirect above ***************************
+redirect to new page http://localhost:3000/home (this will make it so user sees new content on page instead of login form)
+pass the query as a cookie OR BETTER --> USE CORS!!!
+    method to pass as a cookie:
+server side: res.cookie('accessToken', 'your_access_token_value', { maxAge: 3600000, httpOnly: true });
+client side: npm install js-cookie
+import Cookies from 'js-cookie';
+const accessToken = Cookies.get('accessToken'); // Now you have the access token without including it in the URL
+***************************************************************************
+*/
 });
 })
 
@@ -80,5 +92,8 @@ router.post("/search/:token", async (req,res) =>{
     .then(resp => resp.json)
     .then(data => res.json(data));
 })
+
+
+
 
 module.exports = router;
