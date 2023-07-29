@@ -58,7 +58,7 @@ const accessToken = Cookies.get('accessToken'); // Now you have the access token
 router.get("/getUser/:token", async(req, res) => {
     await fetch("https://api.spotify.com/v1/me",{
         headers: {
-            "Authorization": `Bearer${req.params.token}`
+            "Authorization": `Bearer ${req.params.token}`
         }
     })
     .then(response => response.json())
