@@ -3,6 +3,8 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const encodeFormData =  require("../helperFunctions/encodeFormData.js");
 const querystring = require("querystring");
+// const {handleRatingRequest} = require('oracledb); // ./oracleDb? ... need to import handleRatingReq function
+
 
 /*
 router.get("/test", async (req,res) => {
@@ -80,7 +82,7 @@ router.get("/playlist/:token", async (req,res) => {
 })
 
 // let user search for songs
-router.post("/search/:token", async (req,res) =>{
+router.post("/search/:token", async (req,res) => {
     // split body so it can be encoded in the query
     let unchangedQueryBody = req.body.message.split(" ");
     let changedQueryBody = unchangedQueryBody.join("%20");
@@ -93,6 +95,53 @@ router.post("/search/:token", async (req,res) =>{
     .then(data => res.json(data));
 })
 
+// POST request for user to insert song ratings into DB
+router.post('/ratings', async (req, res) => {
+    try {
+      const { userID, musicID, rating } = req.body;
+      await handleRatingRequest('create', userID, musicID, rating);
+      res.status(200).send('Rating submitted');
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      res.status(500).send('Internal server error');
+    }
+  });
+
+  // PUT request for user to update songs ratings in DB
+  router.put('/ratings', async (req, res) => {
+    try{
+        const { userID, musicID, rating } = req.body;
+        await handleRatingRequest('update', userID, musicID, rating); 
+        res.status(200).send('Rating updated');
+    } catch (error) {
+        console.error('Error updating rating: ', error);
+        res.status(500).send('Internal server error');
+    }
+  });
+
+  // GET request for use to retrieve songs from DB
+  router.get('./ratings', async (req, res) => {
+    try{
+        const {userID, musicID, rating} = req.body;
+        await handleRatingRequest('get', userID, musicID, rating);
+        res.status(200).json({ rating: result.rows[0].RATING });
+    }catch(error){
+        console.error('Error getting ratings: ', error);
+        res.status(500).send('Internal server error');
+    }
+  });
+
+   // DELETE request for use to retrieve songs from DB
+   router.delete('./ratings', async (req,res) => {
+    try{
+        const {userID, musicID, rating} = req.body;
+        await handleRatingRequest('get', userID, musicID, rating);
+        res.status(200).send('Rating deleted');
+    }catch(error){
+        console.error('Error deleting rating: ', error);
+        res.status(500).send('Internal server error');
+    }
+   });
 
 
 
