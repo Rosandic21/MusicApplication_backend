@@ -3,7 +3,18 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const encodeFormData =  require("../helperFunctions/encodeFormData.js");
 const querystring = require("querystring");
-// const {handleRatingRequest} = require('oracledb); // ./oracleDb? ... need to import handleRatingReq function
+
+
+
+//////******DELETE BELOW */
+// const cors = require('cors'); 
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+// app.use(express.urlencoded({extended:true}));
+const handleRatingRequest = require('../handleRatingRequest');
+/////*****************DELETE ABOVE  */
+
 
 
 /*
@@ -81,25 +92,28 @@ router.get("/playlist/:token", async (req,res) => {
     .then(data => res.json(data));
 })
 
-// let user search for songs
-router.post("/search/:token", async (req,res) => {
-    // split body so it can be encoded in the query
-    let unchangedQueryBody = req.body.message.split(" ");
-    let changedQueryBody = unchangedQueryBody.join("%20");
-    fetch (`https://api.spotify.com/v1/search?q=${changedQueryBody}&type=artist,track`,{
-        headers: {
-            "Authorization": `Bearer ${req.params.token}`
-        }
-    })
-    .then(resp => resp.json)
-    .then(data => res.json(data));
-})
+// // let user search for songs
+// router.post("/search/:token", async (req,res) => {
+//     // split body so it can be encoded in the query
+//     let unchangedQueryBody = req.body.message.split(" ");
+//     let changedQueryBody = unchangedQueryBody.join("%20");
+//     fetch (`https://api.spotify.com/v1/search?q=${changedQueryBody}&type=artist,track`,{
+//         headers: {
+//             "Authorization": `Bearer ${req.params.token}`
+//         }
+//     })
+//     .then(resp => resp.json)
+//     .then(data => res.json(data));
+// })
 
 // POST request for user to insert song ratings into DB
 router.post('/ratings', async (req, res) => {
     try {
-      const { userID, musicID, rating } = req.body;
-      await handleRatingRequest('create', userID, musicID, rating);
+      console.log('\n',"*****Debugging in authRoutes.js******",'\n')
+      const { action, userID, musicID, rating, title, artist } = req.body;
+      console.log('\n','Request body:', req.body, '\n');
+      //await handleRatingRequest(action, userID, musicID, rating, title, artist);
+      await handleRatingRequest(req, res);
       res.status(200).send('Rating submitted');
     } catch (error) {
       console.error('Error submitting rating:', error);
@@ -107,41 +121,42 @@ router.post('/ratings', async (req, res) => {
     }
   });
 
-  // PUT request for user to update songs ratings in DB
-  router.put('/ratings', async (req, res) => {
-    try{
-        const { userID, musicID, rating } = req.body;
-        await handleRatingRequest('update', userID, musicID, rating); 
-        res.status(200).send('Rating updated');
-    } catch (error) {
-        console.error('Error updating rating: ', error);
-        res.status(500).send('Internal server error');
-    }
-  });
 
-  // GET request for use to retrieve songs from DB
-  router.get('./ratings', async (req, res) => {
-    try{
-        const {userID, musicID, rating} = req.body;
-        await handleRatingRequest('get', userID, musicID, rating);
-        res.status(200).json({ rating: result.rows[0].RATING });
-    }catch(error){
-        console.error('Error getting ratings: ', error);
-        res.status(500).send('Internal server error');
-    }
-  });
+//   // PUT request for user to update songs ratings in DB
+//   router.put('/ratings', async (req, res) => {
+//     try{
+//         const { userID, musicID, rating } = req.body;
+//         await handleRatingRequest('update', userID, musicID, rating); 
+//         res.status(200).send('Rating updated');
+//     } catch (error) {
+//         console.error('Error updating rating: ', error);
+//         res.status(500).send('Internal server error');
+//     }
+//   });
 
-   // DELETE request for use to retrieve songs from DB
-   router.delete('./ratings', async (req,res) => {
-    try{
-        const {userID, musicID, rating} = req.body;
-        await handleRatingRequest('get', userID, musicID, rating);
-        res.status(200).send('Rating deleted');
-    }catch(error){
-        console.error('Error deleting rating: ', error);
-        res.status(500).send('Internal server error');
-    }
-   });
+//   // GET request for use to retrieve songs from DB
+//   router.get('./ratings', async (req, res) => {
+//     try{
+//         const {userID, musicID, rating} = req.body;
+//         await handleRatingRequest('get', userID, musicID, rating);
+//         res.status(200).json({ title: result.rows[3].RATING , artist: result.rows[4].RATING , rating: result.rows[1].RATING });
+//     }catch(error){
+//         console.error('Error getting ratings: ', error);
+//         res.status(500).send('Internal server error');
+//     }
+//   });
+
+//    // DELETE request for use to retrieve songs from DB
+//    router.delete('./ratings', async (req,res) => {
+//     try{
+//         const {userID, musicID, rating} = req.body;
+//         await handleRatingRequest('get', userID, musicID, rating);
+//         res.status(200).send('Rating deleted');
+//     }catch(error){
+//         console.error('Error deleting rating: ', error);
+//         res.status(500).send('Internal server error');
+//     }
+//    });
 
 
 

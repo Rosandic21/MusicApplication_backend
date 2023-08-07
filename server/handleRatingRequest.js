@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {handleRatingRequest} = require('oracledb');
+//const {handleRatingRequest} = require('oracledb');
+const oracledb = require('oracledb'); // could delete this line 
 const config = require('./config');
 
 
@@ -19,11 +20,13 @@ which will then call the route with the CRUD function associated with the users 
 
 async function handleRatingRequest (req, res) {
     // extract the CRUD action and associated data from the request body 
-    const {action} = req.body;
-    const {userID, musicID, rating} = req.body;
+    console.log('\n',"************1. debugging in handleRatingRequest.js req.body not recieved yet***************",'\n')
+
+    const {action, userID, musicID, rating, title, artist} = req.body;
     
     let connection; // DB connection
     let result; // result of query to DB
+    console.log('\n',"************1. debugging in handleRatingRequest.js req.body has officially been recieved***************",'\n')
 
     try{ {/* connect to DB */}
             connection = await oracledb.getConnection({
@@ -31,13 +34,15 @@ async function handleRatingRequest (req, res) {
             password: config.password,
             connectString: config.connectString
         });
+        console.log('Oracle DB connection established successfully.');
 
         // handle each CRUD operation
         switch (action) {
             case 'create': // Insert a new rating into the database
+            console.log('\n',"***********debugging in handleRating.js create case**********",'\n');
                 result = await connection.execute(
-                    `INSERT INTO RATINGS (MUSICID, RATING, USERID) VALUES (:musicID, :rating, :userID)`,
-                    [musicID, rating, userID]
+                    `INSERT INTO RATINGS (MUSICID, RATING, USERID, TITLE, ARTIST) VALUES (:musicID, :rating, :userID, :title, :artist)`,
+                    [musicID, rating, userID, title, artist]
                 );
                 break;
             
@@ -70,7 +75,7 @@ async function handleRatingRequest (req, res) {
         await connection.commit();
 
         // Send a success response
-        return res.status(200).json({ message: 'Operation successful' });
+       // return res.status(200).json({ message: 'Operation successful' });
 
     // error handling
     } catch (error) { 
