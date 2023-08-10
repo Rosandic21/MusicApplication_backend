@@ -36,23 +36,12 @@ async function handleRatingRequest (req, res) {
         
         switch (req.method) {
             case 'POST':
-                //const {userID, musicID, rating, title, artist} = req.body; // data for insert req
+                const {uID, musicID, rating, title, artist} = req.body; // data for insert req
                 result = await connection.execute(
-                `INSERT INTO RATINGS (MUSICID, RATING, USERID, TITLE, ARTIST) VALUES (:musicID, :rating, :userID, :title, :artist)`,
-                [musicID, rating, userID, title, artist]
+                `INSERT INTO RATINGS (MUSICID, RATING, USERID, TITLE, ARTIST) VALUES (:musicID, :rating, :u_ID, :title, :artist)`,
+                [musicID, rating, uID, title, artist]
                 );
             break;
-
-            // case 'GET':
-            //     const {userID} = req.params; // rename userID to userIDnum
-            //     result = await connection.execute(
-            //     `SELECT TITLE, ARTIST, RATING FROM RATINGS WHERE USERID = :userID`,
-            //     [userID]
-            //     );
-            //     console.log(result);
-            //     res.status(200).send('Rating retrieved');
-            //     //res.status(200).json({ title: result.rows[3].RATING , artist: result.rows[4].RATING , rating: result.rows[1].RATING });
-            // break;
 
             case 'GET':
                 const {userID} = req.params; // rename userID to userIDnum
@@ -68,10 +57,6 @@ async function handleRatingRequest (req, res) {
                 }))
                 console.log('\n' + "ratings: ", ratings,'\n')
                 return ratings;
-
-                //return result.rows;
-                //res.status(200).json({ title: result.rows[3].RATING , artist: result.rows[4].RATING , rating: result.rows[1].RATING });
-           
 
             case 'PUT':
         
@@ -90,15 +75,7 @@ async function handleRatingRequest (req, res) {
         
         
         
-        
-        
-        // if (req.method == 'POST'){
-        //     result = await connection.execute(
-        //         `INSERT INTO RATINGS (MUSICID, RATING, USERID, TITLE, ARTIST) VALUES (:musicID, :rating, :userID, :title, :artist)`,
-        //         [musicID, rating, userID, title, artist]
-        //     );
-        // }
-
+      
 
 
 

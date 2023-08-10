@@ -110,10 +110,8 @@ router.get("/playlist/:token", async (req,res) => {
 // request is recieved from RatingComponent.js (frontend) and processed in handleRatingRequest.js (backend)
 router.post('/ratings', async (req, res) => {
     try {
-      //const { action, userID, musicID, rating, title, artist } = req.body;
-      const { userID, musicID, rating, title, artist } = req.body;
+      const { uID, musicID, rating, title, artist } = req.body;
       console.log('\n','Request body:', req.body, '\n');
-      //await handleRatingRequest(action, userID, musicID, rating, title, artist);
       await handleRatingRequest(req, res);
       res.status(200).send('Rating submitted');
     } catch (error) {
@@ -135,35 +133,12 @@ router.post('/ratings', async (req, res) => {
 //     }
 //   });
 
-
-//   // GET request for user to retrieve songs from DB
-//   // request recieved from ModifyRatings.js (frontend) and process in RatingComponent.js (backend)
-//   router.get('/getRatings/:userID', async (req, res) => {
-//     try{
-//         // const {userID, musicID, rating} = req.body;
-//         // await handleRatingRequest('get', userID, musicID, rating);
-//         //await handleRating('get',userID);
-//         //const {userID} = req.query;
-//         const {userID}=req.params;
-//         await handleRatingRequest(req,res); 
-//         res.status(200).json({ title: result.rows[3].RATING , artist: result.rows[4].RATING , rating: result.rows[1].RATING });
-//     }catch(error){
-//         console.error('Error getting ratings: ', error);
-//         res.status(500).send('Internal server error');
-//     }
-//   });
-
   // GET request for user to retrieve songs from DB
   // request recieved from ModifyRatings.js (frontend) and process in RatingComponent.js (backend)
   router.get('/getRatings/:userID', async (req, res) => {
     try{
-        // const {userID, musicID, rating} = req.body;
-        // await handleRatingRequest('get', userID, musicID, rating);
-        //await handleRating('get',userID);
-        //const {userID} = req.query;
         const {userID}=req.params;
         const result = await handleRatingRequest(req,res); 
-        //res.status(200).json({ title: result[0].title , artist: result[0].artist , rating: result[0].rating });
         res.status(200).json({result});
     }catch(error){
         console.error('Error getting ratings: ', error);
