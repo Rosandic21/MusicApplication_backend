@@ -19,11 +19,14 @@ which will then call the route with the CRUD function associated with the users 
 */
 
 async function handleRatingRequest (req, res) {
-    // extract the CRUD action and associated data from the request body 
-    //const {action, userID} = req.params // data for get req
-   // const {action, userID, musicID, rating, title, artist} = req.body; // data for insert req
     let connection; // DB connection
-  //  let result; // result of query to DB
+
+  
+
+  
+  const {uID, musicID, rating, title, artist} = req.body; // data from post req
+  const {putUserID, putMusicID, putNewRating} = req.body; // data from put req
+  const {userID} = req.params; // params from get request
 
     try{ {/* connect to DB */}
             connection = await oracledb.getConnection({
@@ -33,33 +36,44 @@ async function handleRatingRequest (req, res) {
         });
         console.log('Oracle DB connection established successfully.');
 
-        
+        // ****************************************************************************************************
+        // TODO: ********* if post request has matching musicID+userID then issue a PUT request instead ******
+        // ****************************************************************************************************
+
+        // ? req.method==='POST' && GETfunction(musicID, userID)-->returns true : {req.method==='PUT'}
+
+
         switch (req.method) {
             case 'POST':
-                const {uID, musicID, rating, title, artist} = req.body; // data for insert req
+              //  const {uID, musicID, rating, title, artist} = req.body; // data for insert req
                 result = await connection.execute(
                 `INSERT INTO RATINGS (MUSICID, RATING, USERID, TITLE, ARTIST) VALUES (:musicID, :rating, :u_ID, :title, :artist)`,
                 [musicID, rating, uID, title, artist]
                 );
             break;
 
-            case 'GET':
-                const {userID} = req.params; // rename userID to userIDnum
-                result = await connection.execute(
-                `SELECT TITLE, ARTIST, RATING FROM RATINGS WHERE USERID = :userID`,
-                [userID]
-                );
-                console.log('\n'+ "result.rows: "+ result.rows+ '\n');
-                const ratings = result.rows.map(row => ({
-                    title: row[0],
-                    artist: row[1],
-                    rating: row[2]
-                }))
-                console.log('\n' + "ratings: ", ratings,'\n')
-                return ratings;
+     
+        case 'GET':
+                 const {userID} = req.params; 
+                 result = await connection.execute(
+                 `SELECT TITLE, ARTIST, RATING, MUSICID FROM RATINGS WHERE USERID = :userID`,
+                 [userID]
+                 );
+                 console.log('\n'+ "result.rows: "+ result.rows+ '\n');
+                 const ratings = result.rows.map(row => ({
+                     title: row[0],
+                     artist: row[1],
+                     rating: row[2],
+                     musicID: row[3]
+                 }))
+                 console.log('\n' + "ratings: ", ratings,'\n')
+                 return ratings;
 
             case 'PUT':
-        
+                result = await connection.execute(
+                `UPDATE RATINGS SET RATING = :putNewRating WHERE USERID = :putUserID AND MUSICID = :putMusicID`,
+                [putNewRating, putUserID, putMusicID]
+                )
             break;
 
             case 'DELETE':

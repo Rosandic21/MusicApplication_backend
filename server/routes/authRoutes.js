@@ -122,16 +122,16 @@ router.post('/ratings', async (req, res) => {
 
 
 //   // PUT request for user to update songs ratings in DB
-//   router.put('/ratings', async (req, res) => {
-//     try{
-//         const { userID, musicID, rating } = req.body;
-//         await handleRatingRequest('update', userID, musicID, rating); 
-//         res.status(200).send('Rating updated');
-//     } catch (error) {
-//         console.error('Error updating rating: ', error);
-//         res.status(500).send('Internal server error');
-//     }
-//   });
+  router.put('/putRatings', async (req, res) => {
+    try{
+        const { putUserID, putMusicID, putNewRating } = req.body;
+        await handleRatingRequest(req, res); 
+        res.status(200).send('Rating updated');
+    } catch (error) {
+        console.error('Error updating rating: ', error);
+        res.status(500).send('Internal server error');
+    }
+  });
 
   // GET request for user to retrieve songs from DB
   // request recieved from ModifyRatings.js (frontend) and process in RatingComponent.js (backend)
