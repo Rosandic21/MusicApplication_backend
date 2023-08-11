@@ -147,17 +147,17 @@ router.post('/ratings', async (req, res) => {
   });
 
 
-//    // DELETE request for use to retrieve songs from DB
-//    router.delete('./ratings', async (req,res) => {
-//     try{
-//         const {userID, musicID, rating} = req.body;
-//         await handleRatingRequest('get', userID, musicID, rating);
-//         res.status(200).send('Rating deleted');
-//     }catch(error){
-//         console.error('Error deleting rating: ', error);
-//         res.status(500).send('Internal server error');
-//     }
-//    });
+   // DELETE request for use to retrieve songs from DB
+   router.delete('/delRatings', async (req,res) => {
+    try{
+        const {delUserID, delMusicID} = req.body;
+        await handleRatingRequest(req, res);
+        res.status(200).send('Rating deleted');
+    }catch(error){
+        console.error('Error deleting rating: ', error);
+        res.status(500).send('Internal server error');
+    }
+   });
 
 
 

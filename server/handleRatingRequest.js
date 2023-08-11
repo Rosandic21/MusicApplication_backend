@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const {handleRatingRequest} = require('oracledb');
 const oracledb = require('oracledb'); // could delete this line 
 const config = require('./config');
 
@@ -25,8 +24,10 @@ async function handleRatingRequest (req, res) {
 
   
   const {uID, musicID, rating, title, artist} = req.body; // data from post req
-  const {putUserID, putMusicID, putNewRating} = req.body; // data from put req
   const {userID} = req.params; // params from get request
+  const {putUserID, putMusicID, putNewRating} = req.body; // data from put req
+  const {delUserID, delMusicID} = req.body // data from del req
+  
 
     try{ {/* connect to DB */}
             connection = await oracledb.getConnection({
@@ -77,8 +78,14 @@ async function handleRatingRequest (req, res) {
             break;
 
             case 'DELETE':
-
+                result = await connection.execute(
+                `DELETE FROM RATINGS WHERE MUSICID = :delMusicID AND USERID = :delUserID`,
+                [delMusicID, delUserID]
+                );
             break;
+
+            default:
+                 return res.status(400).json({ error: 'Invalid action' });
         }
         
         
