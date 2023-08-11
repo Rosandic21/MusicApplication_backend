@@ -3,25 +3,7 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const encodeFormData =  require("../helperFunctions/encodeFormData.js");
 const querystring = require("querystring");
-
-
-
-//////******DELETE BELOW */
-// const cors = require('cors'); 
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({extended:true}));
 const handleRatingRequest = require('../handleRatingRequest');
-/////*****************DELETE ABOVE  */
-
-
-
-/*
-router.get("/test", async (req,res) => {
-    res.send('hello, test was a success');
-})
-*/
 
 // user logs in and Spotify OAutho2 prompt gets displayed
 router.get("/login", async (req, res) => {
@@ -53,17 +35,6 @@ await fetch("https://accounts.spotify.com/api/token", {
    let query = querystring.stringify(data);
    //redirect link after logging in
    res.redirect(`http://localhost:3000/home?${query}`)
-
-/*TODO**************: change res.redirect above ***************************
-redirect to new page http://localhost:3000/home (this will make it so user sees new content on page instead of login form)
-pass the query as a cookie OR BETTER --> USE CORS!!!
-    method to pass as a cookie:
-server side: res.cookie('accessToken', 'your_access_token_value', { maxAge: 3600000, httpOnly: true });
-client side: npm install js-cookie
-import Cookies from 'js-cookie';
-const accessToken = Cookies.get('accessToken'); // Now you have the access token without including it in the URL
-***************************************************************************
-*/
 });
 })
 
