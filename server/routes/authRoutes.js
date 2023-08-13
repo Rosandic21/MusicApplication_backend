@@ -82,7 +82,6 @@ router.get("/playlist/:token", async (req,res) => {
 router.post('/ratings', async (req, res) => {
     try {
       const { uID, musicID, rating, title, artist } = req.body;
-      console.log('\n','Request body:', req.body, '\n');
       await handleRatingRequest(req, res);
       res.status(200).send('Rating submitted');
     } catch (error) {

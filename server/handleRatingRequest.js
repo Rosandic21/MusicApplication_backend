@@ -93,9 +93,6 @@ async function handleRatingRequest (req, res) {
         // Commit the transaction
         await connection.commit();
 
-        // Send a success response
-       // return res.status(200).json({ message: 'Operation successful' });
-
     // error handling
     } catch (error) { 
         console.log("Error handling the rating request: ", error);
