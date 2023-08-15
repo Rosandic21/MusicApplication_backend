@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const encodeFormData =  require("../helperFunctions/encodeFormData.js");
 const querystring = require("querystring");
 const handleRatingRequest = require('../handleRatingRequest');
+const path = require('path');
 
 // user logs in and Spotify OAutho2 prompt gets displayed
 router.get("/login", async (req, res) => {
@@ -63,19 +64,6 @@ router.get("/playlist/:token", async (req,res) => {
     .then(data => res.json(data));
 })
 
-// // let user search for songs
-// router.post("/search/:token", async (req,res) => {
-//     // split body so it can be encoded in the query
-//     let unchangedQueryBody = req.body.message.split(" ");
-//     let changedQueryBody = unchangedQueryBody.join("%20");
-//     fetch (`https://api.spotify.com/v1/search?q=${changedQueryBody}&type=artist,track`,{
-//         headers: {
-//             "Authorization": `Bearer ${req.params.token}`
-//         }
-//     })
-//     .then(resp => resp.json)
-//     .then(data => res.json(data));
-// })
 
 // POST request for user to insert song ratings into DB 
 // request is recieved from RatingComponent.js (frontend) and processed in handleRatingRequest.js (backend)
@@ -91,7 +79,7 @@ router.post('/ratings', async (req, res) => {
   });
 
 
-//   // PUT request for user to update songs ratings in DB
+  // PUT request for user to update songs ratings in DB
   router.put('/putRatings', async (req, res) => {
     try{
         const { putUserID, putMusicID, putNewRating } = req.body;
@@ -128,7 +116,14 @@ router.post('/ratings', async (req, res) => {
         res.status(500).send('Internal server error');
     }
    });
+    
+   router.use(express.static('/Users/daniel/Desktop/SpotifyRemixed/server/routes/404')); // serve static files in 404 folder
+   // display 404.html when 404 is detected -- IMPORTANT: ALWAYS KEEP THIS AS THE FINAL ROUTE
+   router.use((req, res) => {
+    const filePath = path.join(__dirname, '404/404.html');
+    res.status(404).sendFile(filePath);
+});
 
-
+    
 
 module.exports = router;
