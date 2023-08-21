@@ -89,11 +89,11 @@ Now your database should be ready for use.
 
 ## Demo
 
-Login page:
+Login page: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/login.gif)
 
-New music releases:
+New music releases: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/new-releases.gif)
 
-Retrieve user's top tracks and artists:
+Retrieve user's top tracks and artists: 
 
 Rate playlist tracks:
 
