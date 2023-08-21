@@ -93,13 +93,13 @@ Login page: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/mast
 
 New music releases: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/new-releases.gif)
 
-Retrieve user's top tracks and artists: 
+Retrieve user's top tracks and artists: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/top-music.gif)
 
-Rate playlist tracks:
+Rate playlist tracks: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/rate.gif)
 
-Update or delete track ratings:
+Update or delete track ratings: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/update-delete.gif)
 
-Contact form:
+Contact form: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/contact.gif)
 
 
 ## API Reference
