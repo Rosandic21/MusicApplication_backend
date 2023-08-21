@@ -1,0 +1,3 @@
+[submodule "ReactMusicApp"]
+	path = ReactMusicApp
+	url = https://github.com/Rosandic21/ReactMusicApp.git
