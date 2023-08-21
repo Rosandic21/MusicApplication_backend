@@ -89,17 +89,23 @@ Now your database should be ready for use.
 
 ## Demo
 
-####Login page: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/login.gif)
+#### Login page: 
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/login.gif)
 
-####New music releases: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/new-releases.gif)
+#### New music releases: 
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/new-releases.gif)
 
-####Retrieve user's top tracks and artists: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/top-music.gif)
+#### Retrieve user's top tracks and artists: 
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/top-music.gif)
 
-####Rate playlist tracks: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/rate.gif)
+#### Rate playlist tracks: 
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/rate.gif)
 
-####Update or delete track ratings: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/update-delete.gif)
+#### Update or delete track ratings: 
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/update-delete.gif)
 
-####Contact form: ![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/contact.gif)
+#### Contact form:
+![](https://github.com/Rosandic21/MusicApplication_backend/blob/master/gifs/contact.gif)
 
 
 ## API Reference
