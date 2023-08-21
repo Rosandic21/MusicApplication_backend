@@ -116,6 +116,7 @@ router.post('/ratings', async (req, res) => {
         res.status(500).send('Internal server error');
     }
    });
+
     
    router.use(express.static('/Users/daniel/Desktop/SpotifyRemixed/server/routes/404')); // serve static files in 404 folder
    // display 404.html when 404 is detected -- IMPORTANT: ALWAYS KEEP THIS AS THE FINAL ROUTE
@@ -124,6 +125,6 @@ router.post('/ratings', async (req, res) => {
     res.status(404).sendFile(filePath);
 });
 
-    
+
 
 module.exports = router;

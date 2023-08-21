@@ -1,22 +1,12 @@
+/* handleRatingRequest.js:
+The API route in authRoutes.js receives a CRUD request from the front end, 
+uses handleRatingRequest to process the CRUD logic in that request and issue a response.  
+*/
+
 const express = require('express');
 const router = express.Router();
 const oracledb = require('oracledb'); 
 const config = require('./config');
-
-
-// handleRatingRequest.js
-
-/* 
-The frontend gives options to the user to post/put/get/delete data in the db, 
-which will then call the route with the CRUD function associated with the users request. 
-
-Backend function called 'handleRatingRequest' connects to the DB and handles CRUD logic based 
-on the 'req.method' it receives from the API route. 
-
-The API route receives a request from the front end, 
-uses handleRatingRequest to process the CRUD logic in that request, and issue a response. 
-
-*/
 
 async function handleRatingRequest (req, res) {
     let connection; // DB connection
@@ -25,15 +15,13 @@ async function handleRatingRequest (req, res) {
     const {userID} = req.params; // params from get request
     const {putUserID, putMusicID, putNewRating} = req.body; // data from put req
     const {delUserID, delMusicID} = req.body // data from del req
-
+    
     try{ {/* connect to DB */}
             connection = await oracledb.getConnection({
             user: config.user,
             password: config.password,
             connectString: config.connectString
         });
-        console.log('Oracle DB connection established successfully.');
-
 
         switch (req.method) {
             case 'POST':
@@ -59,7 +47,6 @@ async function handleRatingRequest (req, res) {
             break;
      
         case 'GET':
-                 const {userID} = req.params; 
                  result = await connection.execute(
                  `SELECT TITLE, ARTIST, RATING, MUSICID FROM RATINGS WHERE USERID = :userID`,
                  [userID]
